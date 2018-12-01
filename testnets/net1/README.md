@@ -56,48 +56,69 @@ Wynik:
 Jest tylko 100 (nie 600), ponieważ _block\_maturity_ jest równe 10, czyli coiny są ważne dopiero po 10 blokach od ich wykopania.
 ### Przesłanie środków do Boba
 Bob generuje adres:
-> bitcoin-cli -datadir=bob getnewaddress
-> 2My9gwBiTCagjiqhL6DSKjgShxFX7Vnz9Vy
+```
+bitcoin-cli -datadir=bob getnewaddress
+2My9gwBiTCagjiqhL6DSKjgShxFX7Vnz9Vy
+```
+
 Charlie przesyła 10 btc:
-> bitcoin-cli -datadir=charlie sendtoaddress 2My9gwBiTCagjiqhL6DSKjgShxFX7Vnz9Vy 10
-> bdac943260d8c0e8cbec90d1726756ae14b51d8ecc6ccaf84e3e52969044d533
+```
+bitcoin-cli -datadir=charlie sendtoaddress 2My9gwBiTCagjiqhL6DSKjgShxFX7Vnz9Vy 10
+bdac943260d8c0e8cbec90d1726756ae14b51d8ecc6ccaf84e3e52969044d533
+```
+
 Stany kont:
-> bitcoin-cli -datadir=charlie getbalance
-> 89.99996260
-> bitcoin-cli -datadir=bob getbalance
-> 0.00000000
+```
+bitcoin-cli -datadir=charlie getbalance
+89.99996260
+bitcoin-cli -datadir=bob getbalance
+0.00000000
+```
+
 (Transakcja nie została potwierdzona)
 Potwierdzenie transakcji w bloku:
-> bitcoin-cli -datadir=charlie generate 1
+```
+bitcoin-cli -datadir=charlie generate 1
 bitcoin-cli -datadir=bob getbalance
 10.00000000
-### Transfer od Boba do Alice
-> bitcoin-cli -datadir=alice getnewaddress "alice-main"
-> 2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W
-Transfer: 
-> bitcoin-cli -datadir=bob sendtoaddress 2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W 1
-> 9dd52fe583bc6eed57ab870aabf069cb3791d86cbea9a789720ec52ad39331c9
-Balans:
-> bitcoin-cli -datadir=bob getbalance
-> 8.99996680
-> bitcoin-cli -datadir=alice getbalance
-> 0.00000000
-Generacja bloku:
-> bitcoin-cli -datadir=charlie generate 1
-Nowy balans:
-> bitcoin-cli -datadir=bob getbalance
-> 8.99996680
-> bitcoin-cli -datadir=alice getbalance
-> 1.00000000
-> bitcoin-cli -datadir=charlie getbalance
-> 189.99996260
+```
 
+### Transfer od Boba do Alice
+```
+bitcoin-cli -datadir=alice getnewaddress "alice-main"
+2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W
+```
+
+Transfer: 
+```
+bitcoin-cli -datadir=bob sendtoaddress 2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W 1
+9dd52fe583bc6eed57ab870aabf069cb3791d86cbea9a789720ec52ad39331c9
+```
+
+Balans:
+```bitcoin-cli -datadir=bob getbalance
+8.99996680
+bitcoin-cli -datadir=alice getbalance
+0.00000000
+```
+
+Generacja bloku:
+`bitcoin-cli -datadir=charlie generate 1`
+Nowy balans:
+```
+bitcoin-cli -datadir=bob getbalance
+8.99996680
+bitcoin-cli -datadir=alice getbalance
+1.00000000
+bitcoin-cli -datadir=charlie getbalance
+189.99996260
+```
 ## Podłączenie minera
 Konfiguracja portu _rpcport_ musi się zgadzać w konfiguracji _cpuminera_ i węzła.  
 W tym wypadku podłączałem _minerd_ do węzła _Charlie_.  
 Plik konfiguracyjny dla _minerd_" __cfg-net1.json__  
 Uruchamianie minera:
-> ./minerd -c cfg-net1.json --no-longpoll --no-getwork --no-stratum --coinbase-addr=2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP
+`./minerd -c cfg-net1.json --no-longpoll --no-getwork --no-stratum --coinbase-addr=2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP`
 gdzie 2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP to adres węzła Charlie.
 
 ### Wnioski:
