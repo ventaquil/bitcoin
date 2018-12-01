@@ -51,7 +51,7 @@ bitcoind -datadir=alice
 bitcoind -datadir=bob
 ```
 ### Ile połączeń do Charlie?
-bitcoin-cli --datadir=charlie getconnectioncount
+`bitcoin-cli --datadir=charlie getconnectioncount`
 ### Generacja bloków
 Generujemy 12 bloków (w naszym buildzie narazie maturity jest 10)
 `bitcoin-cli -datadir=charlie generate 12`
