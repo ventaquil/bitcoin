@@ -72,7 +72,7 @@ Potwierdzenie transakcji w bloku:
 bitcoin-cli -datadir=bob getbalance
 10.00000000
 ### Transfer od Boba do Alice
-> bitcoin-cli -datadir=alice getnewaddress
+> bitcoin-cli -datadir=alice getnewaddress "alice-main"
 > 2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W
 Transfer: 
 > bitcoin-cli -datadir=bob sendtoaddress 2N3JLoics4Z1fGdZvBrUZhV7HGh9wq8c81W 1
@@ -91,6 +91,15 @@ Nowy balans:
 > 1.00000000
 > bitcoin-cli -datadir=charlie getbalance
 > 189.99996260
+
+## Podłączenie minera
+Konfiguracja portu _rpcport_ musi się zgadzać w konfiguracji _cpuminera_ i węzła.  
+W tym wypadku podłączałem _minerd_ do węzła _Charlie_.  
+Plik konfiguracyjny dla _minerd_" __cfg-net1.json__  
+Uruchamianie minera:
+> ./minerd -c cfg-net1.json --no-longpoll --no-getwork --no-stratum --coinbase-addr=2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP
+gdzie 2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP to adres węzła Charlie.
+
 ### Wnioski:
 
 
