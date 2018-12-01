@@ -16,43 +16,49 @@ W każdym ma się znaleźć plik konfiguracyjny _bitcoin.conf_ o zawartości:
 ### Nodes
 Wszystkie węzły na jednym komputerze:
 * Alice
-> regtest =1
-> [regtest]
-> port=8330
-> rpcport=8331
-> connect=127.0.0.1:8335
-> deprecatedrpc=generate
+```
+regtest =1
+[regtest]
+port=8330
+rpcport=8331
+connect=127.0.0.1:8335
+deprecatedrpc=generate
+```
 * Bob
-> regtest =1 
-> [regtest]
-> port=8332
-> rpcport=8333
-> connect=127.0.0.1:8335
-> deprecatedrpc=generate
+```
+regtest =1 
+[regtest]
+port=8332
+rpcport=8333
+connect=127.0.0.1:8335
+deprecatedrpc=generate
+```
 * Charlie
-> regtest =1
-> [regtest]
-> rpcuser=rpc
-> rpcpassword=rpc
-> port=8335
-> rpcport=8336
-> deprecatedrpc=generate
-
+```regtest =1
+[regtest]
+rpcuser=rpc
+rpcpassword=rpc
+port=8335
+rpcport=8336
+deprecatedrpc=generate
+```
 ## Testowanie
 ### Start Węzłów
 W osobnych terminalach albo z opcją _-daemon_
-> bitcoind -datadir=charlie
-> bitcoind -datadir=alice
-> bitcoind -datadir=bob
+```
+bitcoind -datadir=charlie
+bitcoind -datadir=alice
+bitcoind -datadir=bob
+```
 ### Ile połączeń do Charlie?
 bitcoin-cli --datadir=charlie getconnectioncount
 ### Generacja bloków
 Generujemy 12 bloków (w naszym buildzie narazie maturity jest 10)
-> bitcoin-cli -datadir=charlie generate 12
+`bitcoin-cli -datadir=charlie generate 12`
 Dostajemy skróty 12 bloków, sprawdzamy stan konta charliego:
-> bitcoin-cli -datadir=charlie getbalance
+`bitcoin-cli -datadir=charlie getbalance`
 Wynik:
-> 100.00000000
+`100.00000000`
 Jest tylko 100 (nie 600), ponieważ _block\_maturity_ jest równe 10, czyli coiny są ważne dopiero po 10 blokach od ich wykopania.
 ### Przesłanie środków do Boba
 Bob generuje adres:
