@@ -1,0 +1,12 @@
+{
+	"_comment1" : "Any long-format command line argument ",
+	"_comment2" : "may be used in this JSON configuration file",
+
+	"url" : "http://127.0.0.1:19695",
+	"user" : "rpc",
+	"pass" : "rpc",
+
+	"algo" : "sha256d",
+	"threads" : "1"
+
+}
