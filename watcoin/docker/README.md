@@ -18,4 +18,7 @@
                 --env BITCOIN_RPC_DEPRECATED=generate \
                 --env BITCOIN_DATA_DIR=/data \
                 [--env BITCOIN_CONNECT=192.168.7.11:8686] \
+                [--env BITCOIN_ENABLE_DNS] \
                 watcoin
+
+**Tip:** You can use Docker's images names in `BITCOIN_CONNECT` when you add `BITCOIN_ENABLE_DNS` env variable.

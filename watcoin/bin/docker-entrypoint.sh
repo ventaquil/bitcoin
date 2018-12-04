@@ -68,4 +68,11 @@ then
     fi
 fi
 
-bitcoind -datadir="$BITCOIN_DATA_DIR" -conf="$BITCOIN_CONF_FILE"
+flags="-datadir=\"$BITCOIN_DATA_DIR\" -conf=\"$BITCOIN_CONF_FILE\""
+
+if [ -v BITCOIN_ENABLE_DNS ]
+then
+    flags="$flags -dns"
+fi
+
+eval "bitcoind $flags"
