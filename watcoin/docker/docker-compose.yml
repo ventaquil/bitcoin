@@ -1,0 +1,36 @@
+version: '3'
+services:
+    watcoin0:
+      image: "watcoin"
+      environment:
+        BITCOIN_PORT: 8686
+        BITCOIN_RPC_PORT: 8787
+        BITCOIN_RPC_DEPRECATED: "generate"
+        BITCOIN_REGTEST: 1
+        BITCOIN_DATA_DIR: "/data"
+        BITCOIN_DNS: ""
+      restart: "always"
+    watcoin1:
+      image: "watcoin"
+      environment:
+        BITCOIN_PORT: 8686
+        BITCOIN_RPC_PORT: 8787
+        BITCOIN_RPC_DEPRECATED: "generate"
+        BITCOIN_REGTEST: 1
+        BITCOIN_DATA_DIR: "/data"
+        BITCOIN_CONNECT: "watcoin0:8686"
+        BITCOIN_DNS: ""
+      depends_on:
+       - "watcoin0"
+    watcoin2:
+      image: "watcoin"
+      environment:
+        BITCOIN_PORT: 8686
+        BITCOIN_RPC_PORT: 8787
+        BITCOIN_RPC_DEPRECATED: "generate"
+        BITCOIN_REGTEST: 1
+        BITCOIN_DATA_DIR: "/data"
+        BITCOIN_CONNECT: "watcoin0:8686"
+        BITCOIN_DNS: ""
+      depends_on:
+       - "watcoin0"

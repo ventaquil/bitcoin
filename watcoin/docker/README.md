@@ -22,3 +22,9 @@
                 watcoin
 
 **Tip:** You can use Docker's images names in `BITCOIN_CONNECT` when you add `BITCOIN_ENABLE_DNS` env variable.
+
+## Docker Compose
+
+You can spawn some containers using prepared `docker-compose.yml`
+
+    docker-compose --file watcoin/docker/docker-compose.yml up
