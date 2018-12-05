@@ -6,7 +6,7 @@
 
     docker build --tag watcoin \
                     --file watcoin/docker/Dockerfile \
-                    .
+                    . # <--- very important dot
 
 ## Run
 
