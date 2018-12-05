@@ -11,7 +11,10 @@
 ## Run
 
     docker run [-d] \
-                --name watcoin_0 \
+                [--rm] \
+                [--publish 8686:8686] \
+                [--volume absolute/path/to/data:/data] \
+                --name watcoin \
                 --env BITCOIN_PORT=8686 \
                 --env BITCOIN_RPC_PORT=8787 \
                 --env BITCOIN_REGTEST=1 \
