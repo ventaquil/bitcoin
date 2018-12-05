@@ -10,7 +10,7 @@
 
 ## Run
 
-    docker run [-d] \
+    docker run [--detach] \
                 [--rm] \
                 [--publish 8686:8686] \
                 [--volume absolute/path/to/data:/data] \
