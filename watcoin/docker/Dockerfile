@@ -25,11 +25,11 @@ COPY . /app
 WORKDIR /app
 # Configure solution
 RUN ./autogen.sh && \
-        ./configure \
-            --disable-tests \
-            --disable-bench \
-            --with-incompatible-bdb \
-            --without-gui
+    ./configure \
+        --disable-tests \
+        --disable-bench \
+        --with-incompatible-bdb \
+        --without-gui
 # Make solution
 RUN make
 # Install solution
