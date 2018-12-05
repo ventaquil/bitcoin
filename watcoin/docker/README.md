@@ -4,13 +4,15 @@
 
 **Execute in main directory!**
 
-    docker build --tag watcoin \
+    docker build \
+        --tag watcoin \
         --file watcoin/docker/Dockerfile \
         . # <--- very important dot
 
 ## Run
 
-    docker run [--detach] \
+    docker run \
+        --detach|--interactive --tty \
         [--rm] \
         [--publish 8686:8686] \
         [--volume absolute/path/to/data:/data] \
@@ -30,5 +32,6 @@
 
 You can spawn some containers using prepared `docker-compose.yml`
 
-    docker-compose --file watcoin/docker/docker-compose.yml \
+    docker-compose \
+        --file watcoin/docker/docker-compose.yml \
         up
