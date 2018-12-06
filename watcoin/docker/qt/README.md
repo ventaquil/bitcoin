@@ -1,4 +1,4 @@
-# Docker Qt image for Bitcoin
+# Docker Qt Bitcoin image
 
 ## Build
 
@@ -21,7 +21,8 @@
         [--rm] \
         [--publish 8686:8686] \
         [--volume absolute/path/to/data:/data] \
-        --name watcoin \
+        --hostname watcoin:qt \
+        --name watcoin-qt \
         --env BITCOIN_PORT=8686 \
         --env BITCOIN_RPC_PORT=8787 \
         --env BITCOIN_REGTEST=1 \
