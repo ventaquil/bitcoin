@@ -124,7 +124,7 @@ Konfiguracja portu _rpcport_ musi się zgadzać w konfiguracji _cpuminera_ i wę
 W tym wypadku podłączałem _minerd_ do węzła _Charlie_.  
 Plik konfiguracyjny dla _minerd_" __cfg-net1.json__  
 Uruchamianie minera:
-`./minerd -c cfg-net1.json --no-longpoll --no-getwork --no-stratum --coinbase-addr=2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP`
+`./minerd -c cfg-net1.json --no-stratum --coinbase-addr=2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP`
 gdzie 2Msqbr7AXUrLwz6CXqNicUDsJ2MV6tdXZJP to adres węzła Charlie.
 
 ### Wnioski:
