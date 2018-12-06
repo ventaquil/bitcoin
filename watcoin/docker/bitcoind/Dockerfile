@@ -35,5 +35,5 @@ RUN make
 # Install solution
 RUN make install
 # Change entrypoint
-COPY ./watcoin/bin/docker-entrypoint.sh /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY ./watcoin/bin/docker-bitcoind-entrypoint.sh /docker-bitcoind-entrypoint.sh
+ENTRYPOINT ["/docker-bitcoind-entrypoint.sh"]

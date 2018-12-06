@@ -68,7 +68,7 @@ then
     fi
 fi
 
-flags="-datadir=\"$BITCOIN_DATA_DIR\" -conf=\"$BITCOIN_CONF_FILE\""
+flags="-datadir=$BITCOIN_DATA_DIR -conf=$BITCOIN_CONF_FILE $@"
 
 if [ -v BITCOIN_ENABLE_DNS ]
 then

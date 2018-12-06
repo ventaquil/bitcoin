@@ -78,7 +78,7 @@ then
     fi
 fi
 
-flags="-datadir=$BITCOIN_DATA_DIR -conf=$BITCOIN_CONF_FILE"
+flags="-datadir=$BITCOIN_DATA_DIR -conf=$BITCOIN_CONF_FILE $@"
 
 if [ -v BITCOIN_ENABLE_DNS ]
 then
@@ -99,4 +99,4 @@ adduser --quiet \
 
 chown -R $uid:$gid $BITCOIN_DATA_DIR
 
-sudo -u bitcoin $(echo bitcoin-qt $flags)
+sudo -u bitcoin $(echo "bitcoin-qt $flags")
