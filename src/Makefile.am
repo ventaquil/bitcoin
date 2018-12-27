@@ -307,6 +307,8 @@ crypto_libbitcoin_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/aes.cpp \
   crypto/aes.h \
+  crypto/argon2.cpp \
+  crypto/argon2.h \
   crypto/chacha20.h \
   crypto/chacha20.cpp \
   crypto/common.h \
