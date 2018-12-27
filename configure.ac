@@ -435,6 +435,8 @@ AC_ARG_WITH([daemon],
   [build_bitcoind=$withval],
   [build_bitcoind=yes])
 
+AC_CHECK_LIB([argon2],      [main],, AC_MSG_ERROR(libargon2 missing))
+
 use_pkgconfig=yes
 case $host in
   *mingw*)
