@@ -8,11 +8,13 @@
 class CARGON2
 {
 private:
-    uint32_t s[8];
-    unsigned char buf[64];
+    unsigned char* buf;
     uint64_t bytes;
 
 public:
+    static const uint32_t T_COST = 2;
+    static const uint32_t M_COST = 1 << 18; // 256 MB
+    static const uint32_t PARALLELISM = 2;
     static const size_t OUTPUT_SIZE = 32;
 
     CARGON2();
