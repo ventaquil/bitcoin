@@ -325,7 +325,6 @@ public:
             {
                 {0, uint256S("0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206")},
             }
-        
         };*/
 
         chainTxData = ChainTxData{

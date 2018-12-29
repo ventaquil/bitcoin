@@ -5,6 +5,7 @@
 
 #include <primitives/block.h>
 
+#include <crypto/argon2.h>
 #include <hash.h>
 #include <tinyformat.h>
 #include <utilstrencodings.h>
@@ -13,6 +14,14 @@
 uint256 CBlockHeader::GetHash() const
 {
     return SerializeHash(*this);
+}
+
+uint256 CBlockHeader::GetProofOfWorkHash() const
+{
+    uint256 hash;
+    CARGON2().Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
+             .Finalize(UBEGIN(hash));
+    return hash;
 }
 
 std::string CBlock::ToString() const

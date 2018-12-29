@@ -294,6 +294,11 @@ public:
         return *phashBlock;
     }
 
+    uint256 GetBlockProofOfWorkHash() const
+    {
+        return GetBlockHeader().GetProofOfWorkHash();
+    }
+
     int64_t GetBlockTime() const
     {
         return (int64_t)nTime;
