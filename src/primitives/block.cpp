@@ -19,7 +19,7 @@ uint256 CBlockHeader::GetHash() const
 uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
-    CARGON2().Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
+    CARGON2().Write(UBEGIN(nNonce), UEND(nNonce) - UBEGIN(nNonce))
              .Finalize(UBEGIN(hash));
     return hash;
 }
