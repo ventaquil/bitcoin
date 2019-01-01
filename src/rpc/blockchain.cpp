@@ -87,6 +87,7 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex)
     AssertLockHeld(cs_main);
     UniValue result(UniValue::VOBJ);
     result.pushKV("hash", blockindex->GetBlockHash().GetHex());
+    result.pushKV("powhash", blockindex->GetBlockProofOfWorkHash().GetHex());
     int confirmations = -1;
     // Only report confirmations if the block is on the main chain
     if (chainActive.Contains(blockindex))
@@ -104,11 +105,15 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex)
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);
 
-    if (blockindex->pprev)
+    if (blockindex->pprev) {
         result.pushKV("previousblockhash", blockindex->pprev->GetBlockHash().GetHex());
+        result.pushKV("previousblockpowhash", blockindex->pprev->GetBlockProofOfWorkHash().GetHex());
+    }
     CBlockIndex *pnext = chainActive.Next(blockindex);
-    if (pnext)
+    if (pnext) {
         result.pushKV("nextblockhash", pnext->GetBlockHash().GetHex());
+        result.pushKV("nextblockpowhash", pnext->GetBlockProofOfWorkHash().GetHex());
+    }
     return result;
 }
 
@@ -117,6 +122,7 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     AssertLockHeld(cs_main);
     UniValue result(UniValue::VOBJ);
     result.pushKV("hash", blockindex->GetBlockHash().GetHex());
+    result.pushKV("powhash", blockindex->GetBlockProofOfWorkHash().GetHex());
     int confirmations = -1;
     // Only report confirmations if the block is on the main chain
     if (chainActive.Contains(blockindex))
@@ -150,11 +156,15 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);
 
-    if (blockindex->pprev)
+    if (blockindex->pprev) {
         result.pushKV("previousblockhash", blockindex->pprev->GetBlockHash().GetHex());
+        result.pushKV("previousblockpowhash", blockindex->pprev->GetBlockProofOfWorkHash().GetHex());
+    }
     CBlockIndex *pnext = chainActive.Next(blockindex);
-    if (pnext)
+    if (pnext) {
         result.pushKV("nextblockhash", pnext->GetBlockHash().GetHex());
+        result.pushKV("nextblockpowhash", pnext->GetBlockProofOfWorkHash().GetHex());
+    }
     return result;
 }
 
@@ -1197,15 +1207,16 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
             "Returns an object containing various state info regarding blockchain processing.\n"
             "\nResult:\n"
             "{\n"
-            "  \"chain\": \"xxxx\",              (string) current network name as defined in BIP70 (main, test, regtest)\n"
+            "  \"chain\": \"xxxx\",            (string) current network name as defined in BIP70 (main, test, regtest)\n"
             "  \"blocks\": xxxxxx,             (numeric) the current number of blocks processed in the server\n"
             "  \"headers\": xxxxxx,            (numeric) the current number of headers we have validated\n"
-            "  \"bestblockhash\": \"...\",       (string) the hash of the currently best block\n"
+            "  \"bestblockhash\": \"...\",     (string) the hash of the currently best block\n"
+            "  \"bestblockpowhash\": \"...\",  (string) the Proof-of-Work of the currently best block\n"
             "  \"difficulty\": xxxxxx,         (numeric) the current difficulty\n"
             "  \"mediantime\": xxxxxx,         (numeric) median time for the current best block\n"
             "  \"verificationprogress\": xxxx, (numeric) estimate of verification progress [0..1]\n"
             "  \"initialblockdownload\": xxxx, (bool) (debug information) estimate of whether this node is in Initial Block Download mode.\n"
-            "  \"chainwork\": \"xxxx\"           (string) total amount of work in active chain, in hexadecimal\n"
+            "  \"chainwork\": \"xxxx\"         (string) total amount of work in active chain, in hexadecimal\n"
             "  \"size_on_disk\": xxxxxx,       (numeric) the estimated size of the block and undo files on disk\n"
             "  \"pruned\": xx,                 (boolean) if the blocks are subject to pruning\n"
             "  \"pruneheight\": xxxxxx,        (numeric) lowest-height complete block stored (only present if pruning is enabled)\n"
@@ -1213,7 +1224,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
             "  \"prune_target_size\": xxxxxx,  (numeric) the target size used by pruning (only present if automatic pruning is enabled)\n"
             "  \"softforks\": [                (array) status of softforks in progress\n"
             "     {\n"
-            "        \"id\": \"xxxx\",           (string) name of softfork\n"
+            "        \"id\": \"xxxx\",         (string) name of softfork\n"
             "        \"version\": xx,          (numeric) block version\n"
             "        \"reject\": {             (object) progress toward rejecting pre-softfork blocks\n"
             "           \"status\": xx,        (boolean) true if threshold reached\n"
@@ -1222,7 +1233,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
             "  ],\n"
             "  \"bip9_softforks\": {           (object) status of BIP9 softforks in progress\n"
             "     \"xxxx\" : {                 (string) name of the softfork\n"
-            "        \"status\": \"xxxx\",       (string) one of \"defined\", \"started\", \"locked_in\", \"active\", \"failed\"\n"
+            "        \"status\": \"xxxx\",     (string) one of \"defined\", \"started\", \"locked_in\", \"active\", \"failed\"\n"
             "        \"bit\": xx,              (numeric) the bit (0-28) in the block version field used to signal this softfork (only for \"started\" status)\n"
             "        \"startTime\": xx,        (numeric) the minimum median time past of a block at which the bit gains its meaning\n"
             "        \"timeout\": xx,          (numeric) the median time past of a block at which the deployment is considered failed if not yet locked in\n"
@@ -1236,7 +1247,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
             "        }\n"
             "     }\n"
             "  }\n"
-            "  \"warnings\" : \"...\",           (string) any network and blockchain warnings.\n"
+            "  \"warnings\" : \"...\",         (string) any network and blockchain warnings.\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("getblockchaininfo", "")
@@ -1250,6 +1261,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     obj.pushKV("blocks",                (int)chainActive.Height());
     obj.pushKV("headers",               pindexBestHeader ? pindexBestHeader->nHeight : -1);
     obj.pushKV("bestblockhash",         chainActive.Tip()->GetBlockHash().GetHex());
+    obj.pushKV("bestblockpowhash",      chainActive.Tip()->GetBlockProofOfWorkHash().GetHex());
     obj.pushKV("difficulty",            (double)GetDifficulty(chainActive.Tip()));
     obj.pushKV("mediantime",            (int64_t)chainActive.Tip()->GetMedianTimePast());
     obj.pushKV("verificationprogress",  GuessVerificationProgress(Params().TxData(), chainActive.Tip()));
@@ -1911,6 +1923,7 @@ static UniValue getblockstats(const JSONRPCRequest& request)
     ret_all.pushKV("avgfeerate", total_weight ? (totalfee * WITNESS_SCALE_FACTOR) / total_weight : 0); // Unit: sat/vbyte
     ret_all.pushKV("avgtxsize", (block.vtx.size() > 1) ? total_size / (block.vtx.size() - 1) : 0);
     ret_all.pushKV("blockhash", pindex->GetBlockHash().GetHex());
+    ret_all.pushKV("blockpowhash", pindex->GetBlockProofOfWorkHash().GetHex());
     ret_all.pushKV("feerate_percentiles", feerates_res);
     ret_all.pushKV("height", (int64_t)pindex->nHeight);
     ret_all.pushKV("ins", inputs);
