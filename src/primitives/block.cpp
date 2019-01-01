@@ -19,8 +19,15 @@ uint256 CBlockHeader::GetHash() const
 uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
-    CARGON2().Write(UBEGIN(nNonce), UEND(nNonce) - UBEGIN(nNonce))
-             .Finalize(UBEGIN(hash));
+    CARGON2 argon2;
+    argon2.Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
+          .Write(UBEGIN(hashPrevBlock), UEND(hashPrevBlock) - UBEGIN(hashPrevBlock))
+          .Write(UBEGIN(hashMerkleRoot), UEND(hashMerkleRoot) - UBEGIN(hashMerkleRoot))
+          .Write(UBEGIN(nTime), UEND(nTime) - UBEGIN(nTime))
+          .Write(UBEGIN(nBits), UEND(nBits) - UBEGIN(nBits))
+          .Write(UBEGIN(nNonce), UEND(nNonce) - UBEGIN(nNonce))
+          .Finalize(UBEGIN(hash));
+    argon2.Reset();
     return hash;
 }
 

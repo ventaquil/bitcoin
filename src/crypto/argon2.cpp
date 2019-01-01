@@ -1,22 +1,23 @@
 #include <argon2.h>
 #include <crypto/argon2.h>
 #include <string.h>
+#include <utility>
 
 CARGON2::CARGON2() : buf(nullptr), bytes(0)
 {
-    /*
-    sha256::Initialize(s);
-    */
 }
 
 CARGON2& CARGON2::Write(const unsigned char* data, size_t len)
 {
     unsigned char* tmp = (unsigned char*) malloc(sizeof(unsigned char) * (bytes + len));
 
-    memcpy(tmp, buf, bytes);
-    free(buf);
+    if (buf != nullptr) {
+        std::cout << "Copy from buf to tmp" << std::endl;
+        memcpy(tmp, buf, bytes);
+        free(buf);
+    }
 
-    buf = tmp;
+    buf = std::move(tmp);
 
     memcpy(buf + bytes, data, len);
 
