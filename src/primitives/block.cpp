@@ -19,15 +19,21 @@ uint256 CBlockHeader::GetHash() const
 uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
+
+    unsigned char output[CARGON2::OUTPUT_SIZE];
+
     CARGON2 argon2;
     argon2.Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
-          .Write(UBEGIN(hashPrevBlock), UEND(hashPrevBlock) - UBEGIN(hashPrevBlock))
-          .Write(UBEGIN(hashMerkleRoot), UEND(hashMerkleRoot) - UBEGIN(hashMerkleRoot))
+          .Write(hashPrevBlock.begin(), hashPrevBlock.end() - hashPrevBlock.begin())
+          .Write(hashMerkleRoot.begin(), hashMerkleRoot.end() - hashMerkleRoot.begin())
           .Write(UBEGIN(nTime), UEND(nTime) - UBEGIN(nTime))
           .Write(UBEGIN(nBits), UEND(nBits) - UBEGIN(nBits))
           .Write(UBEGIN(nNonce), UEND(nNonce) - UBEGIN(nNonce))
-          .Finalize(UBEGIN(hash));
+          .Finalize(output);
     argon2.Reset();
+
+    memcpy(hash.begin(), output, CARGON2::OUTPUT_SIZE);
+
     return hash;
 }
 
