@@ -12,7 +12,6 @@ CARGON2& CARGON2::Write(const unsigned char* data, size_t len)
     unsigned char* tmp = (unsigned char*) malloc(sizeof(unsigned char) * (bytes + len));
 
     if (buf != nullptr) {
-        std::cout << "Copy from buf to tmp" << std::endl;
         memcpy(tmp, buf, bytes);
         free(buf);
     }
@@ -33,8 +32,10 @@ void CARGON2::Finalize(unsigned char hash[OUTPUT_SIZE])
 
 CARGON2& CARGON2::Reset()
 {
-    free(buf);
-    buf = nullptr;
+    if (buf != nullptr) {
+        free(buf);
+        buf = nullptr;
+    }
 
     bytes = 0;
 
