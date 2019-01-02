@@ -16,11 +16,15 @@ uint256 CBlockHeader::GetHash() const
     return SerializeHash(*this);
 }
 
+#include <iostream>
 uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
 
     unsigned char output[CARGON2::OUTPUT_SIZE];
+
+    // Everything works when we put this line
+    std::cout << "version:\t" << nVersion << "\nprev block:\t" << hashPrevBlock.GetHex() << "\nmerkle root:\t" << hashMerkleRoot.GetHex() << "\ntime:\t" << nTime << "\nbits:\t" << nBits << "\nnonce:\t" << nNonce << std::endl;
 
     CARGON2 argon2;
     argon2.Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
