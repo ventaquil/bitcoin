@@ -20,19 +20,13 @@ uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
 
-    const size_t HEADER_SIZE = 80; // in bytes
+    std::stringstream s;
+    ::Serialize(s, *this);
 
-    unsigned char input[HEADER_SIZE];
-
-    memcpy(input, BEGIN(nVersion), 4);
-    memcpy(input + 4, hashPrevBlock.begin(), 32);
-    memcpy(input + 36, hashMerkleRoot.begin(), 32);
-    memcpy(input + 68, BEGIN(nTime), 4);
-    memcpy(input + 72, BEGIN(nBits), 4);
-    memcpy(input + 76, BEGIN(nNonce), 4);
+    std::string input = s.str();
 
     CARGON2 argon2;
-    argon2.Write(input, HEADER_SIZE)
+    argon2.Write((const unsigned char*)input.c_str(), input.size())
           .Finalize((unsigned char*)&hash);
     argon2.Reset();
 
