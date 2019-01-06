@@ -16,27 +16,25 @@ uint256 CBlockHeader::GetHash() const
     return SerializeHash(*this);
 }
 
-#include <iostream>
 uint256 CBlockHeader::GetProofOfWorkHash() const
 {
     uint256 hash;
 
-    unsigned char output[CARGON2::OUTPUT_SIZE];
+    const size_t HEADER_SIZE = 80; // in bytes
 
-    // Everything works when we put this line
-    std::cout << "version:\t" << nVersion << "\nprev block:\t" << hashPrevBlock.GetHex() << "\nmerkle root:\t" << hashMerkleRoot.GetHex() << "\ntime:\t" << nTime << "\nbits:\t" << nBits << "\nnonce:\t" << nNonce << std::endl;
+    unsigned char input[HEADER_SIZE];
+
+    memcpy(input, BEGIN(nVersion), 4);
+    memcpy(input + 4, hashPrevBlock.begin(), 32);
+    memcpy(input + 36, hashMerkleRoot.begin(), 32);
+    memcpy(input + 68, BEGIN(nTime), 4);
+    memcpy(input + 72, BEGIN(nBits), 4);
+    memcpy(input + 76, BEGIN(nNonce), 4);
 
     CARGON2 argon2;
-    argon2.Write(UBEGIN(nVersion), UEND(nVersion) - UBEGIN(nVersion))
-          .Write(hashPrevBlock.begin(), hashPrevBlock.end() - hashPrevBlock.begin())
-          .Write(hashMerkleRoot.begin(), hashMerkleRoot.end() - hashMerkleRoot.begin())
-          .Write(UBEGIN(nTime), UEND(nTime) - UBEGIN(nTime))
-          .Write(UBEGIN(nBits), UEND(nBits) - UBEGIN(nBits))
-          .Write(UBEGIN(nNonce), UEND(nNonce) - UBEGIN(nNonce))
-          .Finalize(output);
+    argon2.Write(input, HEADER_SIZE)
+          .Finalize((unsigned char*)&hash);
     argon2.Reset();
-
-    memcpy(hash.begin(), output, CARGON2::OUTPUT_SIZE);
 
     return hash;
 }
