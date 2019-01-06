@@ -3,6 +3,8 @@
 #include <string.h>
 #include <utility>
 
+const unsigned char CARGON2::SALT[] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
+
 CARGON2::CARGON2() : buf(nullptr), bytes(0)
 {
 }
@@ -27,7 +29,7 @@ CARGON2& CARGON2::Write(const unsigned char* data, size_t len)
 
 void CARGON2::Finalize(unsigned char hash[OUTPUT_SIZE])
 {
-    argon2d_hash_raw(T_COST, M_COST, PARALLELISM, buf, bytes, nullptr, 0, hash, OUTPUT_SIZE);
+    argon2d_hash_raw(T_COST, M_COST, PARALLELISM, buf, bytes, SALT, SALT_SIZE, hash, OUTPUT_SIZE);
 }
 
 CARGON2& CARGON2::Reset()

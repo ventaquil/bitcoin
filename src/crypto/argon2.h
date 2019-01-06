@@ -15,6 +15,8 @@ public:
     static const uint32_t T_COST = 2;
     static const uint32_t M_COST = 1 << 18; // 256 MB
     static const uint32_t PARALLELISM = 2;
+    static const uint32_t SALT_SIZE = 16;
+    static const unsigned char SALT[SALT_SIZE];
     static const size_t OUTPUT_SIZE = 32;
 
     CARGON2();
