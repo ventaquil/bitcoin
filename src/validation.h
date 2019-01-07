@@ -31,6 +31,8 @@
 
 #include <atomic>
 
+#include <iostream>
+
 class CBlockIndex;
 class CBlockTreeDB;
 class CChainParams;
