@@ -108,9 +108,9 @@ public:
         nDefaultPort = 8686;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1546848258, 268, 0x1f0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1546977593, 10602, 0x1f0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x2c70c2a0db4ed08b9dac69ca0f894341d1c8c5c50eb9a2243f21c10203f5cbc8"));
+        assert(consensus.hashGenesisBlock == uint256S("0x2d3e1bc2fadfa6db14695d5a27e31199649e747f4f616e37bdf034fd120d8724"));
         assert(genesis.hashMerkleRoot == uint256S("0xd37da901580360ab0f1e39e76a408088953e3b9c5e2658a82b0f93a541efbe1c"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -219,9 +219,9 @@ public:
         nDefaultPort = 18686;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1546848258, 268, 0x1f0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1546977593, 10602, 0x1f0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x2c70c2a0db4ed08b9dac69ca0f894341d1c8c5c50eb9a2243f21c10203f5cbc8"));
+        assert(consensus.hashGenesisBlock == uint256S("0x2d3e1bc2fadfa6db14695d5a27e31199649e747f4f616e37bdf034fd120d8724"));
         assert(genesis.hashMerkleRoot == uint256S("0xd37da901580360ab0f1e39e76a408088953e3b9c5e2658a82b0f93a541efbe1c"));
 
         vFixedSeeds.clear();
@@ -311,9 +311,9 @@ public:
 
         UpdateVersionBitsParametersFromArgs(args);
 
-        genesis = CreateGenesisBlock(1546848258, 268, 0x1f0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1546977593, 10602, 0x1f0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x2c70c2a0db4ed08b9dac69ca0f894341d1c8c5c50eb9a2243f21c10203f5cbc8"));
+        assert(consensus.hashGenesisBlock == uint256S("0x2d3e1bc2fadfa6db14695d5a27e31199649e747f4f616e37bdf034fd120d8724"));
         assert(genesis.hashMerkleRoot == uint256S("0xd37da901580360ab0f1e39e76a408088953e3b9c5e2658a82b0f93a541efbe1c"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
