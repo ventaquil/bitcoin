@@ -1,5 +1,7 @@
-#include <argon2.h>
 #include <crypto/argon2.h>
+
+#include <argon2.h>
+#include <crypto/common.h>
 #include <string.h>
 #include <utility>
 
@@ -29,7 +31,17 @@ CARGON2& CARGON2::Write(const unsigned char* data, size_t len)
 
 void CARGON2::Finalize(unsigned char hash[OUTPUT_SIZE])
 {
+    for (uint64_t i = 0; i < bytes; i += 4) {
+        uint32_t bytes = ReadLE32(buf + i);
+        WriteBE32(buf + i, bytes);
+    }
+
     argon2d_hash_raw(T_COST, M_COST, PARALLELISM, buf, bytes, SALT, SALT_SIZE, hash, OUTPUT_SIZE);
+
+    for (uint64_t i = 0; i < OUTPUT_SIZE; i += 4) {
+        uint32_t bytes = ReadLE32(hash + i);
+        WriteBE32(hash + i, bytes);
+    }
 }
 
 CARGON2& CARGON2::Reset()
